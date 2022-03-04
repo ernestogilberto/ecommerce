@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Negra Modelo",
+    "price": 19.5,
+    "thumbnail": "https://modeloramanow.vtexassets.com/arquivos/ids/155740-800-auto?v=637485022952800000&width=800&height=auto&aspect=true",
+    "description": "Cerveza oscura con un sabor con carácter.",
+    "stock": 45,
+    "timestamp": "3/3/2022 - 19:48:43",
+    "code": "CE-1646358523847",
+    "id": 1
+  },
+  {
+    "name": "Modelo Especial",
+    "price": 18.5,
+    "thumbnail": "https://modeloramanow.vtexassets.com/arquivos/ids/155937-800-auto?v=637641254219700000&width=800&height=auto&aspect=true",
+    "description": "Cerveza clara con un sabor refrescante.",
+    "stock": 34,
+    "timestamp": "3/3/2022 - 21:6:38",
+    "code": "CE-1646363198581",
+    "id": 2
+  },
+  {
+    "name": "Modelo Pura Malta",
+    "price": 17,
+    "thumbnail": "https://modeloramanow.vtexassets.com/arquivos/ids/156077-800-auto?v=637698359289630000&width=800&height=auto&aspect=true",
+    "description": "El sabor que ya conoces ahora con pura malta.",
+    "stock": 32,
+    "timestamp": "3/3/2022 - 21:7:51",
+    "code": "CE-1646363271382",
+    "id": 3
+  },
+  {
+    "name": "Corona cero",
+    "price": 15,
+    "thumbnail": "https://modeloramanow.vtexassets.com/arquivos/ids/156066-800-auto?v=637689547744230000&width=800&height=auto&aspect=true",
+    "description": "Mismo sabor, pero sin alcohol.",
+    "stock": 64,
+    "timestamp": "3/3/2022 - 21:9:11",
+    "code": "CE-1646363351731",
+    "id": 4
+  },
+  {
+    "name": "Victoria",
+    "price": 17,
+    "thumbnail": "https://modeloramanow.vtexassets.com/arquivos/ids/155633-800-auto?v=637467673034500000&width=800&height=auto&aspect=true",
+    "description": "Ni clara ni oscura, mestiza.",
+    "stock": 43,
+    "timestamp": "3/3/2022 - 21:10:14",
+    "code": "CE-1646363414047",
+    "id": 5
+  }
+]
