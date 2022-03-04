@@ -30,6 +30,13 @@ class CartManager extends Manager {
     return {status: 200, payload: currentCart.products};
   }
 
+  deleteProduct = async (cart, product) => {
+    let currentCart = await this.getById(cart).then(response => response.payload)
+    let index = currentCart.products.findIndex(p => p.id === product);
+    currentCart.products.splice(index, 1);
+    return this.updateById(cart, currentCart);
+  }
+
 }
 
 export default CartManager

@@ -30,16 +30,15 @@ router.post('/:id/:prod', async (req, res) => {
   updateCarts();
 })
 
-
-
 router.get('/:id', async (req, res) => {
   let index = parseInt(req.params.id);
   res.send(await manager.getProducts(index).then(r=> (r.payload)))
 })
 
-router.get('/:id', async (req, res) => {
+router.delete('/:id/:prod', async (req, res) => {
   let index = parseInt(req.params.id);
-  res.send(await manager.getById(index).then(r=> (r.payload)))
+  let product = parseInt(req.params.prod);
+  res.send(await manager.deleteProduct(index).then(r=> (r.payload)))
 })
 
 
