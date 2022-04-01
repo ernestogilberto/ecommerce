@@ -1,8 +1,18 @@
 import express from 'express';
 const router = express.Router();
 
-import cartManager from '../managers/cartManager.js';
-const manager = new cartManager('src/files/carts.json');
+const persistencia = 'fs';
+let manager
+
+if (persistencia === 'mongo') {
+  import ('../daos/carts/cartsDaoMongo.js').then((cartManager) => {
+    manager = new cartManager();
+  });
+} else if (persistencia === 'fs') {
+  import ('../daos/carts/cartsDaoFs.js').then((cartManager) => {
+    manager = new cartManager();
+  });
+}
 
 let carts = [];
 

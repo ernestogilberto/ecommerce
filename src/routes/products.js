@@ -1,10 +1,20 @@
 import express from 'express';
 const router = express.Router();
 
-import productManager from '../managers/productManager.js';
-const manager = new productManager('src/files/products.json');
+const persistencia = 'fs';
+let manager
 
-let admin = false;
+if (persistencia === 'mongo') {
+  import ('../daos/products/productsDaoMongo.js').then((productManager) => {
+    manager = new productManager();
+  });
+} else if (persistencia === 'fs') {
+  import ('../daos/products/productsDaoFs.js').then((productManager) => {
+    manager = new productManager();
+  });
+}
+
+let admin = true;
 let products = [];
 
 const initialProducts = async () => {

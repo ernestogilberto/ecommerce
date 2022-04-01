@@ -33,7 +33,7 @@ const setId = async (path) => {
 }
 
 
-class Manager {
+class ManagerFs {
   constructor(path) {
     this.path = path;
   }
@@ -129,4 +129,4 @@ class Manager {
 
 }
 
-export default Manager;
+export default ManagerFs;

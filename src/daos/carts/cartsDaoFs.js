@@ -1,8 +1,6 @@
-import Manager from './manager.js';
-import {response} from 'express';
+import ManagerFs from '../../managers/managerFs.js';
 
-
-class CartManager extends Manager {
+class CartsDaoFs extends ManagerFs {
 
   constructor(path) {
     super(path);
@@ -17,10 +15,10 @@ class CartManager extends Manager {
     return this.save(cart);
   }
 
-  addToCart = async (cart, product) => {
+  addToCart = async (cart, productId) => {
     let currentCart = await this.getById(cart).then(response => response.payload)
     console.log(currentCart);
-    currentCart.products.push(product);
+    currentCart.products.push(productId);
     return this.updateById(cart, currentCart);
   }
 
@@ -39,4 +37,4 @@ class CartManager extends Manager {
 
 }
 
-export default CartManager
+export default CartsDaoFs
