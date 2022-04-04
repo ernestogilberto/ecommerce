@@ -35,4 +35,4 @@ const productSchema = new mongoose.Schema({
   },
 });
 
-export const ProductService = mongoose.model(productCollection, productSchema);
+export const ProductsService = mongoose.model(productCollection, productSchema);

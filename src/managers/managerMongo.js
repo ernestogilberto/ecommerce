@@ -1,23 +1,9 @@
 import mongoose from 'mongoose';
-import {ProductService} from '../models/product.js';
 import fs from 'fs';
 
-const connection = () => {
-  mongoose.connect('mongodb+srv://ernesto:123@ecommerce.o7ngl.mongodb.net/ecommerce?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('Conectado a MongoDB');
-    }
-  });
-}
-
-const getData = async (model) => {
+const getData = async (model, query) => {
   try {
-    let data = await this.model.find();
+    let data = await model.find();
     return {status: 200, payload: data}
   } catch (e) {
     return {status: 'error', error: e}
@@ -27,7 +13,20 @@ const getData = async (model) => {
 class ManagerMongo {
   constructor(model) {
     this.model = model;
-    connection();
+    this.connection();
+  }
+
+  connection = () => {
+    mongoose.connect('mongodb+srv://ernesto:123@ecommerce.o7ngl.mongodb.net/ecommerce?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Conectado a MongoDB');
+      }
+    });
   }
 
 
@@ -42,16 +41,15 @@ class ManagerMongo {
 
   getById = async (id) => {
     if (!id) return {status: 'error', error: 'id Needed'}
+    console.log(typeof id)
+    console.log(id);
     try {
-      let data = await getData(this.path).then(result => result)
-      if (data.status === 200) {
-        let item = await data.payload.find(item => item.id === id)
-        if (item) {
-          return {status: 200, payload: item}
-        }
-        return {status: 404, error: 'item not found'}
+      let data = await this.model.findById(id);
+      console.log(data);
+      if (data) {
+        return {status: 200, payload: data}
       }
-      return {status: 404, error: 'Missing File'}
+      return {status: 404, error: 'item not found'}
     } catch (e) {
       return {status: 'error', error: e}
     }
@@ -59,8 +57,10 @@ class ManagerMongo {
 
   getAll = async () => {
     try {
-      let data = await getData(this.path).then(result => result)
+      console.log('getAll');
+      let data = await getData(this.model).then(result => result)
       if (data.status === 200) {
+        console.log('getAll', data.payload);
         return {status: 200, payload: data.payload}
       }
       return {status: 404, error: 'Missing File'}
@@ -72,17 +72,10 @@ class ManagerMongo {
 
   deleteById = async (id) => {
     if (!id) return {status: 'error', error: 'id Needed'}
+
     try {
-      let data = await getData(this.path).then(result => result)
-      if (data.status === 200) {
-        let items = data.payload.filter(item => item.id !== id)
-        if (data.payload.length !== items.length) {
-          await fs.promises.writeFile(this.path, JSON.stringify(items, null, 2))
-          return {status: 200, message: `successfully deleted item with id: ${id}`}
-        }
-        return {status: 404, message: 'item not found'}
-      }
-      return {status: 'error', error: 'Missing File'}
+      await this.model.findByIdAndDelete(id);
+      return {status: 200, message: `successfully deleted item with id: ${id}`}
     } catch (e) {
       return {status: 'error', error: e}
     }
@@ -90,7 +83,7 @@ class ManagerMongo {
 
   deleteAll = async () => {
     try {
-      await fs.promises.unlink(this.path)
+      await this.model.deleteMany({});
       return {status: 200, message: 'File deleted successfully'}
     } catch (e) {
       return {status: 'error', error: e}
@@ -100,7 +93,7 @@ class ManagerMongo {
   updateById = async (id, body) => {
     if (!id) return {status: 'error', error: 'id Needed'}
     try {
-      let data = await getData(this.path).then(result => result)
+      let data = await getData().then(result => result)
       if (data.status === 200) {
         let items = await data.payload.map(item => item.id === id ? body : item)
         await fs.promises.writeFile(this.path, JSON.stringify(items, null, 2))

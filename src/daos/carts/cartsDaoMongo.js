@@ -1,10 +1,9 @@
 import ManagerMongo from '../../managers/managerMongo.js';
-import { CartService } from '../../models/cart.js';
 
 class CartsDaoMongo extends ManagerMongo {
 
-  constructor() {
-    super();
+  constructor(model) {
+    super(model);
   }
 
   addCart () {

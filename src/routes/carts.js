@@ -1,17 +1,17 @@
 import express from 'express';
-const router = express.Router();
+import CartsDaoMongo from '../daos/carts/cartsDaoMongo.js';
+import CartsDaoFs from '../daos/carts/cartsDaoFs.js';
+import {CartsService} from '../models/cart.js';
 
+
+const router = express.Router();
 const persistencia = 'fs';
 let manager
 
 if (persistencia === 'mongo') {
-  import ('../daos/carts/cartsDaoMongo.js').then((cartManager) => {
-    manager = new cartManager();
-  });
+  manager = new CartsDaoMongo(CartsService);
 } else if (persistencia === 'fs') {
-  import ('../daos/carts/cartsDaoFs.js').then((cartManager) => {
-    manager = new cartManager();
-  });
+  manager = new CartsDaoFs('src/files/carts.json');
 }
 
 let carts = [];

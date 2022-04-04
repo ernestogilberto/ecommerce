@@ -1,17 +1,17 @@
 import express from 'express';
-const router = express.Router();
+import ProductsDaoMongo from '../daos/products/productsDaoMongo.js'
+import ProductsDaoFs from '../daos/products/productsDaoFs.js'
+import { ProductsService } from '../models/product.js';
 
-const persistencia = 'fs';
+
+const router = express.Router();
+const persistencia = 'mongo';
 let manager
 
 if (persistencia === 'mongo') {
-  import ('../daos/products/productsDaoMongo.js').then((productManager) => {
-    manager = new productManager();
-  });
+    manager = new ProductsDaoMongo(ProductsService);
 } else if (persistencia === 'fs') {
-  import ('../daos/products/productsDaoFs.js').then((productManager) => {
-    manager = new productManager();
-  });
+    manager = new ProductsDaoFs('src/files/products.json');
 }
 
 let admin = true;
@@ -29,7 +29,8 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-  let index = parseInt(req.params.id);
+  let index = req.params.id
+  if (persistencia === 'fs') index = parseInt(index);
   res.send(await manager.getById(index).then(r => (r.payload)))
 })
 
