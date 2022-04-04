@@ -57,10 +57,8 @@ class ManagerMongo {
 
   getAll = async () => {
     try {
-      console.log('getAll');
       let data = await getData(this.model).then(result => result)
       if (data.status === 200) {
-        console.log('getAll', data.payload);
         return {status: 200, payload: data.payload}
       }
       return {status: 404, error: 'Missing File'}
@@ -74,7 +72,7 @@ class ManagerMongo {
     if (!id) return {status: 'error', error: 'id Needed'}
 
     try {
-      await this.model.findByIdAndDelete(id);
+      await this.model.deleteOne({_id: id});
       return {status: 200, message: `successfully deleted item with id: ${id}`}
     } catch (e) {
       return {status: 'error', error: e}

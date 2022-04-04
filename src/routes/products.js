@@ -43,14 +43,16 @@ router.post('/', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  let index = parseInt(req.params.id);
+  let index = req.params.id;
+  if (persistencia === 'fs') index = parseInt(index);
   products = products.filter(product => product.id !== index);
   !admin ? res.send({error: 'error', message: 'You are not authorized to perform this action'}) :
       res.send(await manager.deleteById(index).then(r => (r.message)))
 })
 
 router.put('/:id', async (req, res) => {
-  let index = parseInt(req.params.id);
+  let index = req.params.id
+  if (persistencia === 'fs') index = parseInt(index);
   let product = req.body;
   product.id = index;
   products = products.map(currentProduct => currentProduct.id === index ? product : currentProduct)
